@@ -24,6 +24,8 @@ let divConnect = {
 let gameOver = false;
 
 let lastWinner = 'O';
+let xWins = 0;
+let oWins = 0;
 
 
 
@@ -75,7 +77,7 @@ document.getElementById('board').addEventListener('click', (event) => {
       resolveTurn(yPos, xPos, 'O');
 
     } else {
-      event.target.style.backgroundImage = "url('https://lh3.googleusercontent.com/proxy/QAyjktL2ozNKpx550VTmc_q0jyPwGWjfzNM8lts08HtfNQAF3r7og1LXuhiCp-Cz7oYnoigksOrVrjQEc3bLWToglISxjjOro_pEYFPuAhdCLrEOMpScmCZsNLqeCHrRUiUdfA4Al6hh-Rb5NTZt-rx2lPdMapuwfw')"; // image for x
+      event.target.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU')"; // image for x
 
       resolveTurn(yPos, xPos, 'X');
     }
@@ -94,6 +96,11 @@ const resolveTurn = (yPos, xPos, turnStr) => {
     gameOver = true;
     lastWinner = winner;
     document.getElementById('winner').innerHTML = `${winner} wins, they will go second next round`;
+    if (winner === 'X') {
+      xWins++;
+    } else {
+      oWins++;
+    }
   } else {
     whoseTurn++;
   }
