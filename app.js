@@ -28,30 +28,28 @@ state.lastWinner = 'O';
 state.xWins = 0;
 state.oWins = 0;
 
+state.xName = 'steve';
+state.oName = 'Y';
+
 
 
 // Event Handlers =============================================
 
 document.getElementById('reset').addEventListener('click', (event) => {
-  // console.log('clicked');
-  state.boardState = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null]
-  ]
-  if (state.lastWinner === 'O') {
-    state.whoseTurn = 1;
-  } else {
-    state.whoseTurn = 0;
-  }
-  viewFunctions.renderNewBoard();
-
-  state.gameOver = false;
-  console.log('new Game');
+  pageActions.resetClick(event);
 });
 
 
 document.getElementById('board').addEventListener('click', (event) => {
+  pageActions.boardClick(event);
+});
+
+
+// page event funcs =============================================
+
+let pageActions = {};
+
+pageActions.boardClick = (event) => {
   // console.log(event);
   // console.log(event.target);
   if (state.gameOver === true) {
@@ -77,7 +75,24 @@ document.getElementById('board').addEventListener('click', (event) => {
       resolveTurn(yPos, xPos, 'X');
     }
   }
-})
+}
+
+pageActions.resetClick = (event) => {
+  state.boardState = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null]
+  ]
+  if (state.lastWinner === 'O') {
+    state.whoseTurn = 1;
+  } else {
+    state.whoseTurn = 0;
+  }
+  viewFunctions.renderNewBoard();
+
+  state.gameOver = false;
+  console.log('new Game');
+}
 
 // rendering view funcs =============================================
 
@@ -97,6 +112,15 @@ viewFunctions.renderNewBoard = () => {
     square.style.backgroundImage = 'none';
   }
 }
+
+viewFunctions.updateWinner = (winner) => {
+  document.getElementById('winner').innerHTML = `${winner} wins, they will go second next round`;
+}
+
+viewFunctions.updateScores = () => {
+  document.getElementById('score').innerHTML = `O has ${state.oWins} wins<br><br>X has ${state.xWins} wins`;
+}
+
 // resolve turn logic =============================================
 
 // post click handler
@@ -107,13 +131,18 @@ const resolveTurn = (yPos, xPos, turnStr) => {
     alert(`${winner} Wins!!!`)
     state.gameOver = true;
     state.lastWinner = winner;
-    document.getElementById('winner').innerHTML = `${winner} wins, they will go second next round`;
+    if (winner === 'X') {
+      var winnerName = state.xName;
+    } else {
+      var winnerName = state.oName;
+    }
+    viewFunctions.updateWinner(winnerName);
     if (winner === 'X') {
       state.xWins++;
     } else {
       state.oWins++;
     }
-    document.getElementById('score').innerHTML = `O has ${state.oWins} wins<br>X has ${state.xWins} wins`;
+    viewFunctions.updateScores();
   } else {
     state.whoseTurn++;
   }
