@@ -101,6 +101,7 @@ const resolveTurn = (yPos, xPos, turnStr) => {
     } else {
       oWins++;
     }
+    document.getElementById('score').innerHTML = `O has ${oWins} wins<br>X has ${xWins} wins`;
   } else {
     whoseTurn++;
   }
