@@ -28,8 +28,8 @@ state.lastWinner = 'O';
 state.xWins = 0;
 state.oWins = 0;
 
-state.xName = 'steve';
-state.oName = 'Y';
+state.xName = 'X';
+state.oName = 'O';
 
 
 
@@ -39,15 +39,34 @@ document.getElementById('reset').addEventListener('click', (event) => {
   pageActions.resetClick(event);
 });
 
-
 document.getElementById('board').addEventListener('click', (event) => {
   pageActions.boardClick(event);
 });
+
+document.getElementById('oNameSubmit').addEventListener('click', (event) => {
+  pageActions.changeOName(event);
+});
+
+document.getElementById('xNameSubmit').addEventListener('click', (event) => {
+  pageActions.changeXName(event);
+})
 
 
 // page event funcs =============================================
 
 let pageActions = {};
+
+pageActions.changeOName = (event) => {
+  event.preventDefault();
+  state.oName = document.getElementById('oNameChange').value;
+  viewFunctions.updateScores();
+}
+
+pageActions.changeXName = (event) => {
+  event.preventDefault();
+  state.xName = document.getElementById('xNameChange').value;
+  viewFunctions.updateScores();
+}
 
 pageActions.boardClick = (event) => {
   // console.log(event);
@@ -118,7 +137,7 @@ viewFunctions.updateWinner = (winner) => {
 }
 
 viewFunctions.updateScores = () => {
-  document.getElementById('score').innerHTML = `O has ${state.oWins} wins<br><br>X has ${state.xWins} wins`;
+  document.getElementById('score').innerHTML = `${state.oName} has ${state.oWins} wins<img src="https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436" width="100" height="100"><br><br><br><br><br><br>${state.xName} has ${state.xWins} wins<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU" width="100" height="100">`;
 }
 
 // resolve turn logic =============================================
@@ -128,7 +147,7 @@ const resolveTurn = (yPos, xPos, turnStr) => {
   state.boardState[yPos][xPos] = turnStr;
   let winner = checkAll(state.boardState);
   if (winner) {
-    alert(`${winner} Wins!!!`)
+    // alert(`${winner} Wins!!!`)
     state.gameOver = true;
     state.lastWinner = winner;
     if (winner === 'X') {

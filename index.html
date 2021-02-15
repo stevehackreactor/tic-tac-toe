@@ -8,6 +8,11 @@ in the body tag set up divs -->
     <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
     <style>
+      img {
+        float: left;
+        margin-bottom: 100px;
+        padding-right: 20px;
+      }
       div .square{
         background-color:blue;
         display: inline-block;
@@ -21,7 +26,7 @@ in the body tag set up divs -->
         float: right;
         position: fixed;
         left: 55%;
-        top: 20%;
+        top: 30%;
       }
       #winner {
         float: right;
@@ -35,11 +40,11 @@ in the body tag set up divs -->
     <button id="reset">Reset</button>
     <form>Change O's Name
       <input type="text" id="oNameChange">
-      <input type="submit" value="submit">
+      <input type="submit" value="submit" id="oNameSubmit">
     </form>
     <form>Change X's Name
       <input type="text" id="xNameChange">
-      <input type="submit" value="submit">
+      <input type="submit" value="submit" id="xNameSubmit">
     </form>
     <br>
     <div id="board">
@@ -58,7 +63,7 @@ in the body tag set up divs -->
       </div>
     </div>
     <h1 id="winner">First Round</h1>
-    <h1 id="score">O has 0 wins<br><br>X has 0 wins</h1>
+    <h1 id="score">O has 0 wins<img src="https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436" width="100" height="100"><br><br><br><br><br><br>X has 0 wins<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU" width="100" height="100"></h1>
     <script src="app.js"></script>
   </body>
 </html>
