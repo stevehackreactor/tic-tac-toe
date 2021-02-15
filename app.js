@@ -72,33 +72,33 @@ document.getElementById('board').addEventListener('click', (event) => {
     if (whoseTurn % 2 === 0) {
       event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
 
-      boardState[yPos][xPos] = 'O';
-      let winner = checkAll(boardState);
-      if (winner) {
-        alert(`${winner} Wins!!!`)
-        gameOver = true;
-        lastWinner = winner;
-      } else {
-        whoseTurn++;
-      }
+      resolveTurn(yPos, xPos, 'O');
 
     } else {
       event.target.style.backgroundImage = "url('https://lh3.googleusercontent.com/proxy/QAyjktL2ozNKpx550VTmc_q0jyPwGWjfzNM8lts08HtfNQAF3r7og1LXuhiCp-Cz7oYnoigksOrVrjQEc3bLWToglISxjjOro_pEYFPuAhdCLrEOMpScmCZsNLqeCHrRUiUdfA4Al6hh-Rb5NTZt-rx2lPdMapuwfw')"; // image for x
 
-      boardState[yPos][xPos] = 'X';
-      let winner = checkAll(boardState);
-      if (winner) {
-        alert(`${winner} Wins!!!`)
-        gameOver = true;
-        lastWinner = winner;
-      } else {
-        whoseTurn++;
-      }
+      resolveTurn(yPos, xPos, 'X');
     }
   }
 
   // console.log(boardState);
 })
+// resolve turn logic =============================================
+
+// post click handler
+const resolveTurn = (yPos, xPos, turnStr) => {
+  boardState[yPos][xPos] = turnStr;
+  let winner = checkAll(boardState);
+  if (winner) {
+    alert(`${winner} Wins!!!`)
+    gameOver = true;
+    lastWinner = winner;
+    document.getElementById('winner').innerHTML = `${winner} wins, they will go second next round`;
+  } else {
+    whoseTurn++;
+  }
+}
+
 
 // 3 in a row logic =============================================
 
