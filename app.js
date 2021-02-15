@@ -1,3 +1,5 @@
+// State Management =============================================
+
 let whoseTurn = 1;
 // 0 = O
 // 1 = X
@@ -19,8 +21,10 @@ let divConnect = {
   square8: [2, 2],
 }
 
+// Event Handlers =============================================
+
 document.getElementById('reset').addEventListener('click', (event) => {
-  console.log('clicked');
+  // console.log('clicked');
   boardState = [
     [null, null, null],
     [null, null, null],
@@ -38,20 +42,38 @@ document.getElementById('reset').addEventListener('click', (event) => {
 document.getElementById('board').addEventListener('click', (event) => {
   // console.log(event);
   // console.log(event.target);
+  let dataCoordinates = divConnect[event.target.id]
+  let yPos = dataCoordinates[0];
+  let xPos = dataCoordinates[1];
+
   if (event.target.className === 'square') {
+    // console.log(event.target.id);
     if (whoseTurn % 2 === 0) {
-      event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')";
-      // console.log('O just went');
-      // console.log(boardState);
-      whoseTurn++;
+      event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
+
+      boardState[yPos][xPos] = 'O';
+      if (checkAll(boardState)) {
+        alert(`${checkAll(boardState)} Wins!!!`)
+      } else {
+        whoseTurn++;
+      }
+
     } else {
-      event.target.style.backgroundImage = "url('https://lh3.googleusercontent.com/proxy/QAyjktL2ozNKpx550VTmc_q0jyPwGWjfzNM8lts08HtfNQAF3r7og1LXuhiCp-Cz7oYnoigksOrVrjQEc3bLWToglISxjjOro_pEYFPuAhdCLrEOMpScmCZsNLqeCHrRUiUdfA4Al6hh-Rb5NTZt-rx2lPdMapuwfw')";
-      // console.log(boardState);
-      // console.log('X just went');
-      whoseTurn++;
+      event.target.style.backgroundImage = "url('https://lh3.googleusercontent.com/proxy/QAyjktL2ozNKpx550VTmc_q0jyPwGWjfzNM8lts08HtfNQAF3r7og1LXuhiCp-Cz7oYnoigksOrVrjQEc3bLWToglISxjjOro_pEYFPuAhdCLrEOMpScmCZsNLqeCHrRUiUdfA4Al6hh-Rb5NTZt-rx2lPdMapuwfw')"; // image for x
+
+      boardState[yPos][xPos] = 'X';
+      if (checkAll(boardState)) {
+        alert(`${checkAll(boardState)} Wins!!!`)
+      } else {
+        whoseTurn++;
+      }
     }
   }
+
+  // console.log(boardState);
 })
+
+// 3 in a row logic =============================================
 
 const rowChecker = (boardState) => {
   for (let i = 0; i < boardState.length; i++) {
@@ -142,3 +164,5 @@ const checkAll = (boardState) => {
   }
   // return which party wins if one does otherwise returns undefined
 }
+
+// State Management =============================================
