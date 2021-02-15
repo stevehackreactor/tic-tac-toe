@@ -21,6 +21,12 @@ let divConnect = {
   square8: [2, 2],
 }
 
+let gameOver = false;
+
+let lastWinner = 'O';
+
+
+
 // Event Handlers =============================================
 
 document.getElementById('reset').addEventListener('click', (event) => {
@@ -30,11 +36,17 @@ document.getElementById('reset').addEventListener('click', (event) => {
     [null, null, null],
     [null, null, null]
   ]
-  whoseTurn = 1;
+  if (lastWinner === 'O') {
+    whoseTurn = 1;
+  } else {
+    whoseTurn = 0;
+  }
+
   let squares = document.getElementsByClassName('square');
   for (square of squares) {
     square.style.backgroundImage = 'none';
   }
+  gameOver = false;
   console.log('new Game');
 });
 
@@ -42,9 +54,18 @@ document.getElementById('reset').addEventListener('click', (event) => {
 document.getElementById('board').addEventListener('click', (event) => {
   // console.log(event);
   // console.log(event.target);
+  if (gameOver === true) {
+    return;
+  }
+
   let dataCoordinates = divConnect[event.target.id]
   let yPos = dataCoordinates[0];
   let xPos = dataCoordinates[1];
+
+  if (boardState[yPos][xPos] !== null) {
+    console.log('select a different square');
+    return;
+  }
 
   if (event.target.className === 'square') {
     // console.log(event.target.id);
@@ -52,8 +73,11 @@ document.getElementById('board').addEventListener('click', (event) => {
       event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
 
       boardState[yPos][xPos] = 'O';
-      if (checkAll(boardState)) {
-        alert(`${checkAll(boardState)} Wins!!!`)
+      let winner = checkAll(boardState);
+      if (winner) {
+        alert(`${winner} Wins!!!`)
+        gameOver = true;
+        lastWinner = winner;
       } else {
         whoseTurn++;
       }
@@ -62,8 +86,11 @@ document.getElementById('board').addEventListener('click', (event) => {
       event.target.style.backgroundImage = "url('https://lh3.googleusercontent.com/proxy/QAyjktL2ozNKpx550VTmc_q0jyPwGWjfzNM8lts08HtfNQAF3r7og1LXuhiCp-Cz7oYnoigksOrVrjQEc3bLWToglISxjjOro_pEYFPuAhdCLrEOMpScmCZsNLqeCHrRUiUdfA4Al6hh-Rb5NTZt-rx2lPdMapuwfw')"; // image for x
 
       boardState[yPos][xPos] = 'X';
-      if (checkAll(boardState)) {
-        alert(`${checkAll(boardState)} Wins!!!`)
+      let winner = checkAll(boardState);
+      if (winner) {
+        alert(`${winner} Wins!!!`)
+        gameOver = true;
+        lastWinner = winner;
       } else {
         whoseTurn++;
       }
