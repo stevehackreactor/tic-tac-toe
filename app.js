@@ -44,11 +44,8 @@ document.getElementById('reset').addEventListener('click', (event) => {
   } else {
     state.whoseTurn = 0;
   }
+  viewFunctions.renderNewBoard();
 
-  let squares = document.getElementsByClassName('square');
-  for (square of squares) {
-    square.style.backgroundImage = 'none';
-  }
   state.gameOver = false;
   console.log('new Game');
 });
@@ -73,19 +70,33 @@ document.getElementById('board').addEventListener('click', (event) => {
   if (event.target.className === 'square') {
     // console.log(event.target.id);
     if (state.whoseTurn % 2 === 0) {
-      event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
-
+      viewFunctions.renderO(event);
       resolveTurn(yPos, xPos, 'O');
-
     } else {
-      event.target.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU')"; // image for x
-
+      viewFunctions.renderX(event);
       resolveTurn(yPos, xPos, 'X');
     }
   }
-
-  // console.log(state.boardState);
 })
+
+// rendering view funcs =============================================
+
+let viewFunctions = {};
+
+viewFunctions.renderX = (event) => {
+  event.target.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU')"; // image for x
+}
+
+viewFunctions.renderO = (event) => {
+  event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
+}
+
+viewFunctions.renderNewBoard = () => {
+  let squares = document.getElementsByClassName('square');
+  for (square of squares) {
+    square.style.backgroundImage = 'none';
+  }
+}
 // resolve turn logic =============================================
 
 // post click handler
@@ -200,5 +211,3 @@ const checkAll = (boardState) => {
   }
   // return which party wins if one does otherwise returns undefined
 }
-
-// State Management =============================================
