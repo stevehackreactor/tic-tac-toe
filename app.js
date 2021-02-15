@@ -1,15 +1,16 @@
 // State Management =============================================
+let state = {};
 
-let whoseTurn = 1;
+state.whoseTurn = 1;
 // 0 = O
 // 1 = X
-let boardState = [
+state.boardState = [
   [null, null, null],
   [null, null, null],
   [null, null, null]
 ]
 
-let divConnect = {
+state.divConnect = {
   square0: [0, 0],
   square1: [0, 1],
   square2: [0, 2],
@@ -21,11 +22,11 @@ let divConnect = {
   square8: [2, 2],
 }
 
-let gameOver = false;
+state.gameOver = false;
 
-let lastWinner = 'O';
-let xWins = 0;
-let oWins = 0;
+state.lastWinner = 'O';
+state.xWins = 0;
+state.oWins = 0;
 
 
 
@@ -33,22 +34,22 @@ let oWins = 0;
 
 document.getElementById('reset').addEventListener('click', (event) => {
   // console.log('clicked');
-  boardState = [
+  state.boardState = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
   ]
-  if (lastWinner === 'O') {
-    whoseTurn = 1;
+  if (state.lastWinner === 'O') {
+    state.whoseTurn = 1;
   } else {
-    whoseTurn = 0;
+    state.whoseTurn = 0;
   }
 
   let squares = document.getElementsByClassName('square');
   for (square of squares) {
     square.style.backgroundImage = 'none';
   }
-  gameOver = false;
+  state.gameOver = false;
   console.log('new Game');
 });
 
@@ -56,22 +57,22 @@ document.getElementById('reset').addEventListener('click', (event) => {
 document.getElementById('board').addEventListener('click', (event) => {
   // console.log(event);
   // console.log(event.target);
-  if (gameOver === true) {
+  if (state.gameOver === true) {
     return;
   }
 
-  let dataCoordinates = divConnect[event.target.id]
+  let dataCoordinates = state.divConnect[event.target.id]
   let yPos = dataCoordinates[0];
   let xPos = dataCoordinates[1];
 
-  if (boardState[yPos][xPos] !== null) {
+  if (state.boardState[yPos][xPos] !== null) {
     console.log('select a different square');
     return;
   }
 
   if (event.target.className === 'square') {
     // console.log(event.target.id);
-    if (whoseTurn % 2 === 0) {
+    if (state.whoseTurn % 2 === 0) {
       event.target.style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')"; // image for O
 
       resolveTurn(yPos, xPos, 'O');
@@ -83,27 +84,27 @@ document.getElementById('board').addEventListener('click', (event) => {
     }
   }
 
-  // console.log(boardState);
+  // console.log(state.boardState);
 })
 // resolve turn logic =============================================
 
 // post click handler
 const resolveTurn = (yPos, xPos, turnStr) => {
-  boardState[yPos][xPos] = turnStr;
-  let winner = checkAll(boardState);
+  state.boardState[yPos][xPos] = turnStr;
+  let winner = checkAll(state.boardState);
   if (winner) {
     alert(`${winner} Wins!!!`)
-    gameOver = true;
-    lastWinner = winner;
+    state.gameOver = true;
+    state.lastWinner = winner;
     document.getElementById('winner').innerHTML = `${winner} wins, they will go second next round`;
     if (winner === 'X') {
-      xWins++;
+      state.xWins++;
     } else {
-      oWins++;
+      state.oWins++;
     }
-    document.getElementById('score').innerHTML = `O has ${oWins} wins<br>X has ${xWins} wins`;
+    document.getElementById('score').innerHTML = `O has ${state.oWins} wins<br>X has ${state.xWins} wins`;
   } else {
-    whoseTurn++;
+    state.whoseTurn++;
   }
 }
 
