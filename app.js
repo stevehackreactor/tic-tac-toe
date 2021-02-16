@@ -33,6 +33,7 @@ state.oName = 'O';
 
 
 
+
 // Event Handlers =============================================
 
 document.getElementById('reset').addEventListener('click', (event) => {
@@ -89,10 +90,10 @@ pageActions.boardClick = (event) => {
   if (event.target.className === 'square') {
     // console.log(event.target.id);
     if (state.whoseTurn % 2 === 0) {
-      viewFunctions.renderO(event);
+      // viewFunctions.renderO(event);
       resolveTurn(yPos, xPos, 'O');
     } else {
-      viewFunctions.renderX(event);
+      // viewFunctions.renderX(event);
       resolveTurn(yPos, xPos, 'X');
     }
   }
@@ -143,11 +144,34 @@ viewFunctions.updateScores = () => {
   document.getElementById('score').innerHTML = `${state.oName} has ${state.oWins} wins<img src="https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436" width="100" height="100"><br><br><br><br><br><br>${state.xName} has ${state.xWins} wins<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU" width="100" height="100">`;
 }
 
+viewFunctions.reRenderBoard = () => {
+  let squareLoc = 0;
+
+  for (let i = 0; i < state.boardState.length; i++) {
+    for (let j = 0; j < state.boardState.length; j++) {
+      if (state.boardState[i][j] === null) {
+        document.getElementById(`square${squareLoc}`).style.backgroundImage = "none";
+      } else if (state.boardState[i][j] === 'X') {
+        document.getElementById(`square${squareLoc}`).style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU')";
+      } else {
+        document.getElementById(`square${squareLoc}`).style.backgroundImage = "url('https://static.wikia.nocookie.net/rimworld-bestiary/images/7/73/MM_WillOWisp_east.png/revision/latest?cb=20190918105436')";
+      }
+      squareLoc++;
+    }
+  }
+}
+
 // resolve turn logic =============================================
 
 // post click handler
 const resolveTurn = (yPos, xPos, turnStr) => {
   state.boardState[yPos][xPos] = turnStr;
+  // insert side gravity
+  state.boardState = applyGravityAll(state.boardState);
+  // insert rotation
+  boardRotation();
+  console.log(state.boardState);
+  viewFunctions.reRenderBoard();
   let winner = checkAll(state.boardState);
   if (winner) {
     // alert(`${winner} Wins!!!`)
@@ -281,7 +305,7 @@ const boardRotation = () => {
     // i will indicate which column
     for (let j = 0; j < state.boardState.length; j++) {
       // j will indicate which row
-      newRow.push(state.boardState[j][i]);
+      newRow.unshift(state.boardState[j][i]);
     }
     newState.push(newRow);
   }
@@ -311,7 +335,7 @@ const applyGravityAll = (twodArray) => {
   let returnArr = [];
   for (let i = 0; i < twodArray.length; i++) {
     let row = twodArray[i];
-    returnArr.push(applyGravvity(row));
+    returnArr.push(applyGravity(row));
   }
   return returnArr;
 }
