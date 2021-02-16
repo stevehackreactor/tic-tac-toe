@@ -59,12 +59,14 @@ let pageActions = {};
 pageActions.changeOName = (event) => {
   event.preventDefault();
   state.oName = document.getElementById('oNameChange').value;
+  document.getElementById('oNameChange').value = '';
   viewFunctions.updateScores();
 }
 
 pageActions.changeXName = (event) => {
   event.preventDefault();
   state.xName = document.getElementById('xNameChange').value;
+  document.getElementById('xNameChange').value = '';
   viewFunctions.updateScores();
 }
 
@@ -111,6 +113,7 @@ pageActions.resetClick = (event) => {
 
   state.gameOver = false;
   console.log('new Game');
+  document.body.style.backgroundImage = "none";
 }
 
 // rendering view funcs =============================================
@@ -148,6 +151,11 @@ const resolveTurn = (yPos, xPos, turnStr) => {
   let winner = checkAll(state.boardState);
   if (winner) {
     // alert(`${winner} Wins!!!`)
+    document.body.style.backgroundImage = "url('https://media.giphy.com/media/1ofR3QioNy264/giphy.gif')";
+
+    setTimeout(() => {
+      document.body.style.backgroundImage = "none";
+    }, 2000);
     state.gameOver = true;
     state.lastWinner = winner;
     if (winner === 'X') {
@@ -246,6 +254,7 @@ const checkAll = (boardState) => {
   if (rowChecker(boardState)) {
     return rowChecker(boardState);
   }
+
   if(columnChecker(boardState)) {
     return columnChecker(boardState);
   }
@@ -259,3 +268,55 @@ const checkAll = (boardState) => {
   }
   // return which party wins if one does otherwise returns undefined
 }
+
+// board rotation logic =============================================
+
+
+const boardRotation = () => {
+  let newState = [];
+
+  for (let i = 0; i < state.boardState.length; i++) {
+    let newRow = [];
+    let col = i;
+    // i will indicate which column
+    for (let j = 0; j < state.boardState.length; j++) {
+      // j will indicate which row
+      newRow.push(state.boardState[j][i]);
+    }
+    newState.push(newRow);
+  }
+  state.boardState = newState;
+}
+
+const applyGravity = (array) => {
+  // moves all null values in an array to the left
+  returnArr = [];
+
+  for (let i = array.length - 1; i >= 0; i--) {
+    let ele = array[i];
+    if (ele !== null) {
+      returnArr.unshift(ele);
+    }
+  }
+  let nullsToAdd = array.length - returnArr.length;
+
+  for (let i = 0; i < nullsToAdd; i++) {
+    returnArr = [null].concat(returnArr);
+  }
+
+  return returnArr;
+}
+
+const applyGravityAll = (twodArray) => {
+  let returnArr = [];
+  for (let i = 0; i < twodArray.length; i++) {
+    let row = twodArray[i];
+    returnArr.push(applyGravvity(row));
+  }
+  return returnArr;
+}
+// state.boardState = [
+//   [null, null, null],
+//   [null, null, null],
+//   [null, null, null]
+// ]
