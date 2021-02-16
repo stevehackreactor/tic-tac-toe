@@ -31,6 +31,8 @@ state.oWins = 0;
 state.xName = 'X';
 state.oName = 'O';
 
+state.hardMode = true;
+
 
 
 
@@ -50,12 +52,26 @@ document.getElementById('oNameSubmit').addEventListener('click', (event) => {
 
 document.getElementById('xNameSubmit').addEventListener('click', (event) => {
   pageActions.changeXName(event);
-})
+});
 
+document.getElementById('hardmode').addEventListener('click', (event) => {
+  pageActions.toggleHardMode(event);
+});
 
 // page event funcs =============================================
 
 let pageActions = {};
+
+pageActions.toggleHardMode = (event) => {
+  event.preventDefault();
+  state.hardMode = (!state.hardMode);
+  console.log('HARDMODE ', state.hardMode);
+  if (state.hardMode) {
+    document.getElementById('hardmode').innerHTML = 'HardMode On';
+  } else {
+    document.getElementById('hardmode').innerHTML = 'HardMode Off';
+  }
+}
 
 pageActions.changeOName = (event) => {
   event.preventDefault();
@@ -166,11 +182,11 @@ viewFunctions.reRenderBoard = () => {
 // post click handler
 const resolveTurn = (yPos, xPos, turnStr) => {
   state.boardState[yPos][xPos] = turnStr;
-  // insert side gravity
-  state.boardState = applyGravityAll(state.boardState);
-  // insert rotation
-  boardRotation();
-  console.log(state.boardState);
+
+  if (state.hardMode) {
+    state.boardState = applyGravityAll(state.boardState);
+    boardRotation();
+  }
   viewFunctions.reRenderBoard();
   let winner = checkAll(state.boardState);
   if (winner) {

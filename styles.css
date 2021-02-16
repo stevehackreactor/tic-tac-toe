@@ -39,3 +39,8 @@ div .square{
 form {
   margin: 10px;
 }
+
+#hardmode {
+  float: left;
+  display: absolute;
+}
