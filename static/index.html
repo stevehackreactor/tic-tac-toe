@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- set up the doc type
+set up head
+import script app.js
+in the body tag set up divs -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <button id="reset">Reset</button>
+    <form>Change O's Name
+      <input type="text" id="oNameChange">
+      <input type="submit" value="submit" id="oNameSubmit">
+    </form>
+    <form>Change X's Name
+      <input type="text" id="xNameChange">
+      <input type="submit" value="submit" id="xNameSubmit">
+    </form>
+    <br>
+    <div id="board">
+      <table>
+        <div id='square0' class="square"></div>
+        <div id='square1' class="square"></div>
+        <div id='square2' class="square"></div>
+        <br>
+        <div id='square3' class="square"></div>
+        <div id='square4' class="square"></div>
+        <div id='square5' class="square"></div>
+        <br>
+        <div id='square6' class="square"></div>
+        <div id='square7' class="square"></div>
+        <div id='square8' class="square"></div>
+      </div>
+    </div>
+    <button id="hardmode">HardMode On</button>
+    <div id="stats">
+      <h1 id="winner">First Round</h1>
+      <h1 id="score">O has 0 wins<img src="https://lh3.googleusercontent.com/proxy/91dnuPX2rayiTPvsWb6Ai-7V07lyMOzytMAEv8rvpJ4VsVSymWBMoH1HLHTRlqH2nWZ-ygT35Duish0xjJ6yzG7c5AxPx8FT6AGxNfL89nPGkp5mQBXyH17nhuxII6bBd40-baeHvF1tLPMAuEczPE88t4Aj7rAV_qUrAieA3yDsLdBcuw8" width="100" height="100"><br><br><br><br><br><br>X has 0 wins<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUOdtMq8p0P87h6rsG168Ecbph7jS_hneRg&usqp=CAU" width="100" height="100"></h1>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

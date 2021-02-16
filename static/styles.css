@@ -1,0 +1,47 @@
+img {
+  float: left;
+  margin-bottom: 100px;
+  padding-right: 20px;
+}
+div .square{
+  background-color:blue;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-color: black;
+  border-width: 3px;
+  margin: 5px;
+  border-radius: 5px;
+  background-size: contain;
+}
+#score {
+  float: right;
+  position: fixed;
+  left: 55%;
+  top: 30%;
+}
+#winner {
+  float: right;
+  position: fixed;
+  left: 55%;
+  top: 10%;
+}
+#board {
+  background-color: black;
+  width: 630px;
+  border-radius: 5px;
+}
+
+#reset {
+  margin: 10px 0 10px 25px;
+  padding: 5px;
+}
+
+form {
+  margin: 10px;
+}
+
+#hardmode {
+  float: left;
+  display: absolute;
+}
